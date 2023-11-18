@@ -1,4 +1,4 @@
-import { component$, useSignal, useTask$ } from "@builder.io/qwik";
+import { component$, useSignal, useTask$ } from '@builder.io/qwik';
 import {
   Form,
   routeAction$,
@@ -6,10 +6,11 @@ import {
   useNavigate,
   z,
   zod$,
-} from "@builder.io/qwik-city";
-import { BasicInput, Button } from "@components";
-import { getPlayers } from "~/data/players.api";
-import { getTournament, updateTournament } from "~/data/tournaments.api";
+} from '@builder.io/qwik-city';
+import { BasicInput, Button } from '@components';
+import { getPlayers } from '~/data/players.api';
+import { getTournament, updateTournament } from '~/data/tournaments.api';
+import { urls } from '~/utils/urls';
 
 export const usePlayersData = routeLoader$(async (requestEvent) => {
   return getPlayers(requestEvent.params.tournamentId);
@@ -25,7 +26,7 @@ const formSchema = {
     z.object({
       id: z.string().uuid().optional(),
       name: z.string(),
-    })
+    }),
   ),
 };
 
@@ -39,14 +40,14 @@ export default component$(() => {
   const action = useUpdateTournament();
   const initialPlayerCount = players.value.items.length;
   const countExtraFields = useSignal(
-    players.value.count - initialPlayerCount + 1
+    players.value.count - initialPlayerCount + 1,
   );
   const nav = useNavigate();
 
   useTask$(({ track }) => {
     track(() => action.value?.id);
     if (action.value?.id) {
-      nav(`/tournaments/${action.value.id}`);
+      nav(urls.tournament(action.value.id));
     }
   });
 
@@ -55,7 +56,7 @@ export default component$(() => {
       <h1>{tournament.value.name}</h1>
       <BasicInput
         id="name"
-        text="Tournament name"
+        text={$localize`Tournament name`}
         value={tournament.value.name}
       />
       {players.value.items.map((player, i) => (
@@ -69,7 +70,7 @@ export default component$(() => {
           <BasicInput
             key={`${player.id}-name`}
             id={`players.${i}.name`}
-            text={`Player ${i + 1}`}
+            text={$localize`Player ${i + 1}`}
             value={player.name}
           />
         </div>
@@ -78,13 +79,13 @@ export default component$(() => {
         <BasicInput
           key={`new-player-${i}`}
           id={`players.${initialPlayerCount + i}.name`}
-          text={`Player ${initialPlayerCount + i + 1}`}
+          text={$localize`Player ${initialPlayerCount + i + 1}`}
           onChange$={() =>
             i === countExtraFields.value - 1 && countExtraFields.value++
           }
         />
       ))}
-      <Button type="submit" text="Save" />
+      <Button type="submit" text={$localize`Save`} />
     </Form>
   );
 });

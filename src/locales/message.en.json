@@ -1,8 +1,29 @@
 {
   "locale": "en",
   "translations": {
-    "1573294495032945047": "Hello from {$PH}!",
-    "8569626659814641312": "Use the following links to change the translation.",
-    "6563882999249543998": "Translation is performed as part of the build step so translated strings are inlined into the application, there is no need to load or look them up at runtime. However, these advantages mean that the user cannot change the language without refreshing the page."
+    "1474986127152474280": "Match Mate",
+    "1567933707014835992": "Player 1",
+    "5254622645701859101": "Points",
+    "1814275131671684772": "Player 2",
+    "935187492052582731": "Submit",
+    "6297113706993520961": "Game {$PH} created successfully",
+    "4685659604935567880": "/__/",
+    "2128624502640961509": "New game",
+    "7585826646011739428": "Edit",
+    "4402468059690137469": "Ranking",
+    "5496786811597934512": "Scores",
+    "6449231191759265131": "Tournaments overview",
+    "50950808055612253": "Tournament \"{$PH}\"",
+    "8861872920583414435": "Tournament name",
+    "5675185658977082941": "Player {$PH}",
+    "3768927257183755959": "Save",
+    "8953033926734869941": "Name",
+    "6262238214667792269": "Points for a win",
+    "5626620187787247709": "Points for a tie",
+    "6070063765696915808": "Points for a loss",
+    "7810942377822971578": "Tournament {$PH} created successfully",
+    "4170223103944088523": "Create game",
+    "859420480494653766": "Create tournament",
+    "1863651533959516092": "Start a new tournament"
   }
 }

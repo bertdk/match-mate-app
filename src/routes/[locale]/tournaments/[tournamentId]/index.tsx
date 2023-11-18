@@ -1,10 +1,11 @@
-import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
-import { Link, routeLoader$, useLocation } from "@builder.io/qwik-city";
-import { Tabs } from "@components";
-import type { TournamentGame } from "~/data/games.api";
-import { getGames } from "~/data/games.api";
-import { getRanking, getTournament } from "~/data/tournaments.api";
+import { component$ } from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
+import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
+import { Tabs } from '@components';
+import type { TournamentGame } from '~/data/games.api';
+import { getGames } from '~/data/games.api';
+import { getRanking, getTournament } from '~/data/tournaments.api';
+import { urls } from '~/utils/urls';
 
 export const useTournamentData = routeLoader$(async (requestEvent) => {
   return getTournament(requestEvent.params.tournamentId);
@@ -27,27 +28,27 @@ export default component$(() => {
   return (
     <>
       <div class="mx-4 flex flex-row justify-between">
-        <h1 class="text-xl m-0">{tournament.name}</h1>
+        <h1 class="m-0 text-xl">{tournament.name}</h1>
         <Link
-          href={`/tournaments/${loc.params.tournamentId}/games`}
+          href={urls.games(loc.params.tournamentId)}
           class="flex items-center"
         >
-          New game
+          {$localize`New game`}
         </Link>
       </div>
       <Link
-        href={`/tournaments/${loc.params.tournamentId}/edit`}
+        href={urls.tournamentEdit(loc.params.tournamentId)}
         class="items-center"
       >
-        Edit
+        {$localize`Edit`}
       </Link>
       <Tabs
         tabs={[
           {
-            id: "raking",
-            label: "Ranking",
+            id: 'raking',
+            label: $localize`Ranking`,
             child: ranking.items.map((item, i) => (
-              <div key={item.id} class="flex flex-row mb-4 last:mb-0">
+              <div key={item.id} class="mb-4 flex flex-row last:mb-0">
                 <p class="w-1/6">{i + 1}</p>
                 <p class="w-2/3">{item.name}</p>
                 <p class="w-1/6 text-right">{item.points}</p>
@@ -55,8 +56,8 @@ export default component$(() => {
             )),
           },
           {
-            id: "scores",
-            label: "Scores",
+            id: 'scores',
+            label: $localize`Scores`,
             child: games.items.map((game) => (
               <Score game={game} key={game.id} />
             )),
@@ -70,10 +71,10 @@ export default component$(() => {
 export const head: DocumentHead = ({ resolveValue, params }) => {
   const tournament = resolveValue(useTournamentData);
   return {
-    title: `Tournament "${tournament.name}"`,
+    title: $localize`Tournament "${tournament.name}"`,
     meta: [
       {
-        name: "id",
+        name: 'id',
         content: params.tournamentId,
       },
     ],
@@ -85,13 +86,13 @@ interface ScoreProps {
 }
 const Score = component$(({ game }: ScoreProps) => {
   return (
-    <div key={game.id} class="border-b-2 last:border-none border-zinc-400 p-2">
+    <div key={game.id} class="border-b-2 border-zinc-400 p-2 last:border-none">
       {game.scores.map((score) => (
         <div key={score.id}>
           <div
             class={`flex justify-between ${
               Number(score.gamePoints) ===
-                Math.max(...game.scores.map((x) => x.gamePoints)) && "font-bold"
+                Math.max(...game.scores.map((x) => x.gamePoints)) && 'font-bold'
             }`}
           >
             <p class="w-4/5">{score.player.name}</p>

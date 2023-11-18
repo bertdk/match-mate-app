@@ -1,14 +1,15 @@
-import { component$, useTask$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { component$, useTask$ } from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
 import {
   Form,
   routeAction$,
   useNavigate,
   z,
   zod$,
-} from "@builder.io/qwik-city";
-import { BasicInput, Button } from "@components";
-import { createTournament } from "~/data/tournaments.api";
+} from '@builder.io/qwik-city';
+import { BasicInput, Button } from '@components';
+import { createTournament } from '~/data/tournaments.api';
+import { urls } from '~/utils/urls';
 
 const formSchema = {
   name: z.string().min(1).max(255),
@@ -27,7 +28,7 @@ export default component$(() => {
   useTask$(({ track }) => {
     track(() => action.value?.name);
     if (action.value?.name) {
-      nav(`/tournaments/${action.value.id}`);
+      nav(urls.tournament(action.value.id));
     }
   });
 
@@ -35,7 +36,7 @@ export default component$(() => {
     <>
       <Form action={action} class="flex flex-col">
         <BasicInput
-          text="Name"
+          text={$localize`Name`}
           id="name"
           placeholder="Enter the tournament name"
           type="text"
@@ -44,19 +45,19 @@ export default component$(() => {
         />
         <div class="flex justify-between">
           <BasicInput
-            text="Points for a win"
+            text={$localize`Points for a win`}
             id="pointsOnWin"
             type="number"
             error={action.value?.fieldErrors?.pointsOnWin}
           />
           <BasicInput
-            text="Points for a tie"
+            text={$localize`Points for a tie`}
             id="pointsOnTie"
             type="number"
             error={action.value?.fieldErrors?.pointsOnTie}
           />
           <BasicInput
-            text="Points for a loss"
+            text={$localize`Points for a loss`}
             id="pointsOnLoss"
             type="number"
             error={action.value?.fieldErrors?.pointsOnLoss}
@@ -68,12 +69,12 @@ export default component$(() => {
       </Form>
 
       {action.value && !action.value.failed && (
-        <p>{`Tournament ${action.value.name} created successfully`}</p>
+        <p>{$localize`Tournament ${action.value.name} created successfully`}</p>
       )}
     </>
   );
 });
 
 export const head: DocumentHead = {
-  title: "Create tournament",
+  title: $localize`Create tournament`,
 };

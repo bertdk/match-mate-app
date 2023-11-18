@@ -1,5 +1,5 @@
-import { component$, useTask$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { component$, useTask$ } from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
 import {
   Form,
   routeAction$,
@@ -8,17 +8,18 @@ import {
   useNavigate,
   z,
   zod$,
-} from "@builder.io/qwik-city";
-import { BasicInput, Button, SelectInput } from "@components";
-import { createGame } from "~/data/games.api";
-import { getPlayers } from "~/data/players.api";
+} from '@builder.io/qwik-city';
+import { BasicInput, Button, SelectInput } from '@components';
+import { createGame } from '~/data/games.api';
+import { getPlayers } from '~/data/players.api';
+import { urls } from '~/utils/urls';
 
 const formSchema = {
   scores: z.array(
     z.object({
       playerId: z.string().uuid(),
       gamePoints: z.coerce.number().min(0).max(100),
-    })
+    }),
   ),
 };
 
@@ -41,7 +42,7 @@ export default component$(() => {
   useTask$(({ track }) => {
     track(() => action.value?.id);
     if (action.value?.id) {
-      nav(`/tournaments/${loc.params.tournamentId}`);
+      nav(urls.tournament(loc.params.tournamentId));
     }
   });
 
@@ -50,29 +51,37 @@ export default component$(() => {
       <h1 class="text-xl">Create game</h1>
       <Form action={action} class="flex flex-col">
         <SelectInput
-          label="Player 1"
+          label={$localize`Player 1`}
           id="scores.0.playerId"
           options={players}
         />
-        <BasicInput text="Points" id="scores.0.gamePoints" type="number" />
+        <BasicInput
+          text={$localize`Points`}
+          id="scores.0.gamePoints"
+          type="number"
+        />
         <SelectInput
-          label="Player 2"
+          label={$localize`Player 2`}
           id="scores.1.playerId"
           options={players}
         />
-        <BasicInput text="Points" id="scores.1.gamePoints" type="number" />
+        <BasicInput
+          text={$localize`Points`}
+          id="scores.1.gamePoints"
+          type="number"
+        />
         <div class="place-self-end">
-          <Button text="Submit" type="submit" />
+          <Button text={$localize`Submit`} type="submit" />
         </div>
       </Form>
 
       {action.value && !action.value.failed && (
-        <p>{`Game ${action.value.id} created successfully`}</p>
+        <p>{$localize`Game ${action.value.id} created successfully`}</p>
       )}
     </>
   );
 });
 
 export const head: DocumentHead = {
-  title: "Create game",
+  title: $localize`Create game`,
 };

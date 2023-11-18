@@ -1,0 +1,9 @@
+{
+  "overrides": [
+    {
+      "language": "nl",
+      "filename": "**/*.nl.json",
+      "ignoreWords": ["translations"]
+    }
+  ]
+}

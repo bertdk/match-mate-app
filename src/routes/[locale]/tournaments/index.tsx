@@ -1,7 +1,8 @@
-import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
-import { Link, routeLoader$, useLocation } from "@builder.io/qwik-city";
-import { getTournaments } from "~/data/tournaments.api";
+import { component$ } from '@builder.io/qwik';
+import type { DocumentHead } from '@builder.io/qwik-city';
+import { Link, routeLoader$, useLocation } from '@builder.io/qwik-city';
+import { getTournaments } from '~/data/tournaments.api';
+import { urls } from '~/utils/urls';
 
 export const useTournamentsData = routeLoader$(async () => {
   return getTournaments();
@@ -14,17 +15,17 @@ export default component$(() => {
   return (
     <>
       <div class="mx-4 flex flex-row justify-between">
-        <h1 class="text-xl m-0">Tournaments overview</h1>
+        <h1 class="m-0 text-xl">{$localize`Tournaments overview`}</h1>
         <Link
-          href={`/tournaments/${loc.params.tournamentId}/games`}
+          href={urls.games(loc.params.tournamentId)}
           class="flex items-center"
         >
-          New game
+          {$localize`New game`}
         </Link>
       </div>
       {tournaments.map((tournament) => (
         <Link
-          href={`/tournaments/${tournament.id}`}
+          href={urls.tournament(tournament.id)}
           class="items-center"
           key={tournament.id}
         >
@@ -36,5 +37,5 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: `Tournaments overview`,
+  title: $localize`Tournaments overview`,
 };

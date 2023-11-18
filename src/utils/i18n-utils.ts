@@ -1,14 +1,14 @@
-import "@angular/localize/init";
-import { loadTranslations } from "@angular/localize";
-import { $, getLocale, useOnDocument, withLocale } from "@builder.io/qwik";
-import type { RenderOptions } from "@builder.io/qwik/server";
+import '@angular/localize/init';
+import { loadTranslations } from '@angular/localize';
+import { $, getLocale, useOnDocument, withLocale } from '@builder.io/qwik';
+import type { RenderOptions } from '@builder.io/qwik/server';
 
 // You must declare all your locales here
-import EN from "../../locales/message.en.json";
-import IT from "../../locales/message.it.json";
+import EN from '../locales/message.en.json';
+import NL from '../locales/message.nl.json';
 
 // Make sure it's obvious when the default locale was selected
-const DEFAULT_LOCALE = "en";
+const DEFAULT_LOCALE = 'en';
 
 /**
  * This file is left for the developer to customize to get the behavior they want for localization.
@@ -27,9 +27,10 @@ const $localizeFn = $localize as any as {
  * appropriate translation based on the current locale which is store in the `usEnvDate('local')`.
  */
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 if (!$localizeFn.TRANSLATION_BY_LOCALE) {
-  $localizeFn.TRANSLATION_BY_LOCALE = new Map([["", {}]]);
-  Object.defineProperty($localize, "TRANSLATIONS", {
+  $localizeFn.TRANSLATION_BY_LOCALE = new Map([['', {}]]);
+  Object.defineProperty($localize, 'TRANSLATIONS', {
     get: function () {
       const locale = getLocale(DEFAULT_LOCALE);
       let translations = $localizeFn.TRANSLATION_BY_LOCALE.get(locale);
@@ -45,7 +46,8 @@ if (!$localizeFn.TRANSLATION_BY_LOCALE) {
  * Function used to load all translations variants.
  */
 export function initTranslations() {
-  [EN, IT].forEach(({ translations, locale }) => {
+  console.log('  ➜  Loading translations...');
+  [EN, NL].forEach(({ translations, locale }) => {
     withLocale(locale, () => loadTranslations(translations));
   });
 }
@@ -53,15 +55,42 @@ export function initTranslations() {
 /**
  * Function used to examine the request and determine the locale to use.
  *
- * This function is meant to be used with `RenderOptions.locale` property
+ * in this implementation, we accept a `?locale=xx` parameter to override
+ * the auto-detected locale requested by the browser.
  *
- * @returns The locale to use which will be stored in the `useEnvData('locale')`.
+ * This function is meant to be used with `RenderOptions.locale` property.
+ * It must always return a valid locale so that prod clients will always get de-$localize-d js
+ *
+ * @returns The locale to use, which will be stored in the render context.
  */
-export function extractLang(locale: string): string {
-  return locale && $localizeFn.TRANSLATION_BY_LOCALE.has(locale)
-    ? locale
-    : DEFAULT_LOCALE;
+export function extractLang(request: Request, url: URL): string {
+  // This is not really needed because we handle /locale, but it's here as an example
+  let locale = url.searchParams.get('locale') || undefined;
+  if (locale) {
+    // note that we mutate the URL here, this will update the search property
+    url.searchParams.delete('locale');
+    locale = validateLocale(locale);
+    if (locale) return locale;
+  }
+  // Parse the browser accept-language header
+  const locales = request.headers.get('accept-language')?.split(',');
+  if (locales)
+    for (const entry of locales) {
+      locale = validateLocale(entry);
+      if (locale) return locale;
+    }
+
+  return DEFAULT_LOCALE;
 }
+
+const validateLocale = (locale: string) => {
+  if ($localizeFn.TRANSLATION_BY_LOCALE.has(locale)) return locale;
+  const match = /^([^-;]+)[-;]/.exec(locale);
+  return (
+    (match && $localizeFn.TRANSLATION_BY_LOCALE.has(match[1]) && match[1]) ||
+    undefined
+  );
+};
 
 /**
  * Function used to determine the base URL to use for loading the chunks in the browser.
@@ -74,9 +103,9 @@ export function extractLang(locale: string): string {
  */
 export function extractBase({ serverData }: RenderOptions): string {
   if (import.meta.env.DEV) {
-    return "/build";
+    return '/build';
   } else {
-    return "/build/" + serverData!.locale;
+    return '/build/' + serverData!.locale;
   }
 }
 
@@ -84,7 +113,7 @@ export function useI18n() {
   if (import.meta.env.DEV) {
     // During development only, load all translations in memory when the app starts on the client.
     // eslint-disable-next-line
-    useOnDocument("qinit", $(initTranslations));
+    useOnDocument('qinit', $(initTranslations));
   }
 }
 
