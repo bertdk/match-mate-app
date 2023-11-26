@@ -1,5 +1,6 @@
 import { component$, Slot } from '@builder.io/qwik';
 import { type RequestHandler } from '@builder.io/qwik-city';
+import FavIcon from '/public/favicon.svg?jsx';
 import { LocaleMenu } from '~/components/Locale/localeMenu';
 import { extractLang, locales, useI18n } from '~/utils/i18n-utils';
 
@@ -39,8 +40,8 @@ export default component$(() => {
   return (
     <>
       <main class="px-4 py-2">
-        <div class="flex justify-between">
-          <div />
+        <div class="flex items-center justify-between">
+          <FavIcon style={{ width: '24px', height: '24px' }} />
           <LocaleMenu />
         </div>
         <section class="py-4">
