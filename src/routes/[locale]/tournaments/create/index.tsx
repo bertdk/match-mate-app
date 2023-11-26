@@ -38,12 +38,12 @@ export default component$(() => {
         <BasicInput
           text={$localize`Name`}
           id="name"
-          placeholder="Enter the tournament name"
+          placeholder={$localize`Enter the tournament name`}
           type="text"
           error={action.value?.fieldErrors?.name}
           autoFocus
         />
-        <div class="flex justify-between">
+        <div class="flex items-end justify-between">
           <BasicInput
             text={$localize`Points for a win`}
             id="pointsOnWin"
@@ -64,7 +64,7 @@ export default component$(() => {
           />
         </div>
         <div class="place-self-end">
-          <Button text="Submit" type="submit" />
+          <Button text={$localize`Submit`} type="submit" />
         </div>
       </Form>
 

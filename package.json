@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "@angular/localize": "^17.0.3",
+    "@qwikest/icons": "^0.0.13",
     "axios": "^1.6.2",
     "flowbite": "^2.1.1",
     "qwik": "^1.0.57",

@@ -1,0 +1,31 @@
+{
+  "locale": "es",
+  "translations": {
+    "2826581353496868063": "Idioma",
+    "1474986127152474280": "Match Mate",
+    "1567933707014835992": "Jugador 1",
+    "5254622645701859101": "Puntos",
+    "1814275131671684772": "Jugador 2",
+    "935187492052582731": "Enter",
+    "6297113706993520961": "Creado un partido {$PH} con éxito",
+    "4685659604935567880": "/__/",
+    "2128624502640961509": "Partido nuevo",
+    "7585826646011739428": "Cambiar",
+    "4402468059690137469": "Clasificación",
+    "8410137976081892885": "Escribir el nombre del torneo",
+    "5496786811597934512": "Resultados",
+    "6449231191759265131": "Listado completa de los torneos",
+    "50950808055612253": "Torneo \"{$PH}\"",
+    "8861872920583414435": "Nombre de torneo",
+    "5675185658977082941": "Jugador {$PH}",
+    "3768927257183755959": "Enter",
+    "8953033926734869941": "Nombre",
+    "6262238214667792269": "Puntos por ganar",
+    "5626620187787247709": "Puntos por empatar",
+    "6070063765696915808": "Puntos por perder",
+    "7810942377822971578": "Creado un torneo {$PH} con éxito",
+    "4170223103944088523": "Partido nuevo",
+    "859420480494653766": "Torneo nuevo",
+    "1863651533959516092": "Empezar un torneo nuevo"
+  }
+}

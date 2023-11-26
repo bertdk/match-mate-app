@@ -4,6 +4,11 @@
       "language": "nl",
       "filename": "**/*.nl.json",
       "ignoreWords": ["translations"]
+    },
+    {
+      "language": "es",
+      "filename": "**/*.es.json",
+      "ignoreWords": ["translations"]
     }
   ]
 }

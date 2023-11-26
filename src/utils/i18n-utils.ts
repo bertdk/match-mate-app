@@ -6,9 +6,25 @@ import type { RenderOptions } from '@builder.io/qwik/server';
 // You must declare all your locales here
 import EN from '../locales/message.en.json';
 import NL from '../locales/message.nl.json';
+import ES from '../locales/message.es.json';
 
 // Make sure it's obvious when the default locale was selected
-const DEFAULT_LOCALE = 'en';
+export const locales = [
+  {
+    translate: EN,
+    default: true,
+    fullName: 'English',
+  },
+  {
+    translate: NL,
+    fullName: 'Nederlands',
+  },
+  {
+    translate: ES,
+    fullName: 'Español',
+  },
+];
+const DEFAULT_LOCALE = locales.find((l) => l.default)!.translate.locale;
 
 /**
  * This file is left for the developer to customize to get the behavior they want for localization.
@@ -46,10 +62,11 @@ if (!$localizeFn.TRANSLATION_BY_LOCALE) {
  * Function used to load all translations variants.
  */
 export function initTranslations() {
-  console.log('  ➜  Loading translations...');
-  [EN, NL].forEach(({ translations, locale }) => {
-    withLocale(locale, () => loadTranslations(translations));
-  });
+  locales.forEach((l) =>
+    withLocale(l.translate.locale, () =>
+      loadTranslations(l.translate.translations),
+    ),
+  );
 }
 
 /**

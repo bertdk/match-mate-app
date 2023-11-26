@@ -48,7 +48,7 @@ export default component$(() => {
 
   return (
     <>
-      <h1 class="text-xl">Create game</h1>
+      <h1 class="text-xl">{$localize`Create game`}</h1>
       <Form action={action} class="flex flex-col">
         <SelectInput
           label={$localize`Player 1`}

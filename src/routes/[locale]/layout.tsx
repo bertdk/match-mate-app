@@ -1,8 +1,8 @@
 import { component$, Slot } from '@builder.io/qwik';
-import type { RequestHandler } from '@builder.io/qwik-city';
-import { extractLang, useI18n } from '~/utils/i18n-utils';
+import { type RequestHandler } from '@builder.io/qwik-city';
+import { LocaleMenu } from '~/components/Locale/localeMenu';
+import { extractLang, locales, useI18n } from '~/utils/i18n-utils';
 
-const locales = new Set(['en', 'nl']);
 export const onGet: RequestHandler = async ({
   request,
   url,
@@ -12,7 +12,7 @@ export const onGet: RequestHandler = async ({
   locale,
 }) => {
   const currentLocale = params.locale.toLowerCase();
-  if (locales.has(currentLocale)) {
+  if (new Set(locales.map((l) => l.translate.locale)).has(currentLocale)) {
     // Set the locale for this request
     locale(currentLocale);
   } else {
@@ -38,8 +38,12 @@ export default component$(() => {
   useI18n();
   return (
     <>
-      <main class="px-4 py-6">
-        <section>
+      <main class="px-4 py-2">
+        <div class="flex justify-between">
+          <div />
+          <LocaleMenu />
+        </div>
+        <section class="py-4">
           <Slot />
         </section>
       </main>
