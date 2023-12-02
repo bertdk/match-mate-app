@@ -53,7 +53,7 @@ export default component$(() => {
 
   return (
     <Form action={action}>
-      <h1>{tournament.value.name}</h1>
+      <h1 class="m-0 text-xl">{tournament.value.name}</h1>
       <BasicInput
         id="name"
         text={$localize`Tournament name`}

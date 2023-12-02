@@ -8,12 +8,12 @@ export default component$(() => {
   return (
     <div>
       <Heading text="Match Mate" />
-      <Link
-        href={urls.tournamentCreate}
-      >{$localize`Start a new tournament`}</Link>
-      <p>
+      <div class="flex flex-col">
+        <Link
+          href={urls.tournamentCreate}
+        >{$localize`Start a new tournament`}</Link>
         <Link href={urls.tournaments}>{$localize`Tournaments overview`}</Link>
-      </p>
+      </div>
     </div>
   );
 });

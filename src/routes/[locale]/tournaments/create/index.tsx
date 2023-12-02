@@ -34,7 +34,8 @@ export default component$(() => {
 
   return (
     <>
-      <Form action={action} class="flex flex-col">
+      <h1 class="m-0 text-xl">{$localize`Create tournament`}</h1>
+      <Form action={action} class="flex flex-col space-y-2">
         <BasicInput
           text={$localize`Name`}
           id="name"
@@ -43,25 +44,30 @@ export default component$(() => {
           error={action.value?.fieldErrors?.name}
           autoFocus
         />
-        <div class="flex items-end justify-between">
-          <BasicInput
-            text={$localize`Points for a win`}
-            id="pointsOnWin"
-            type="number"
-            error={action.value?.fieldErrors?.pointsOnWin}
-          />
-          <BasicInput
-            text={$localize`Points for a tie`}
-            id="pointsOnTie"
-            type="number"
-            error={action.value?.fieldErrors?.pointsOnTie}
-          />
-          <BasicInput
-            text={$localize`Points for a loss`}
-            id="pointsOnLoss"
-            type="number"
-            error={action.value?.fieldErrors?.pointsOnLoss}
-          />
+        <div>
+          <label class="block text-sm font-medium text-gray-900 dark:text-white">
+            {$localize`Point distribution after a match`}
+          </label>
+          <div class="flex items-end justify-between">
+            <BasicInput
+              text={$localize`Win`}
+              id="pointsOnWin"
+              type="number"
+              error={action.value?.fieldErrors?.pointsOnWin}
+            />
+            <BasicInput
+              text={$localize`Tie`}
+              id="pointsOnTie"
+              type="number"
+              error={action.value?.fieldErrors?.pointsOnTie}
+            />
+            <BasicInput
+              text={$localize`Loss`}
+              id="pointsOnLoss"
+              type="number"
+              error={action.value?.fieldErrors?.pointsOnLoss}
+            />
+          </div>
         </div>
         <div class="place-self-end">
           <Button text={$localize`Submit`} type="submit" />

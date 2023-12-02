@@ -27,7 +27,7 @@ export default component$(() => {
 
   return (
     <>
-      <div class="mx-4 flex flex-row justify-between">
+      <div class="flex flex-row justify-between">
         <h1 class="m-0 text-xl">{tournament.name}</h1>
         <Link
           href={urls.games(loc.params.tournamentId)}
