@@ -52,7 +52,7 @@ export default component$(() => {
   });
 
   return (
-    <Form action={action}>
+    <Form action={action} class="flex flex-col space-y-2">
       <h1 class="m-0 text-xl">{tournament.value.name}</h1>
       <BasicInput
         id="name"
@@ -85,7 +85,9 @@ export default component$(() => {
           }
         />
       ))}
-      <Button type="submit" text={$localize`Save`} />
+      <div class="place-self-end">
+        <Button text={$localize`Save`} type="submit" />
+      </div>
     </Form>
   );
 });

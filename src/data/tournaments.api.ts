@@ -5,13 +5,9 @@ export const createTournament = async (body: {
   pointsOnWin: number;
   pointsOnTie: number;
   pointsOnLoss: number;
+  players: { name: string }[];
 }) => {
-  const res = await post('/tournaments', {
-    name: body.name,
-    pointsOnWin: body.pointsOnWin,
-    pointsOnTie: body.pointsOnTie,
-    pointsOnLoss: body.pointsOnLoss,
-  });
+  const res = await post('/tournaments', body);
   return res as { name: string; id: string };
 };
 
